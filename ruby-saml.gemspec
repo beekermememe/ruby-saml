@@ -2,13 +2,13 @@ $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 require 'onelogin/ruby-saml/version'
 
 Gem::Specification.new do |s|
-  s.name = 'ruby-saml'
+  s.name = 'ruby-saml-nechotech'
   s.version = Onelogin::Saml::VERSION
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["OneLogin LLC"]
   s.date = Time.now.strftime("%Y-%m-%d")
-  s.description = %q{SAML toolkit for Ruby on Rails}
+  s.description = %q{SAML toolkit for Ruby on Rails forked and modified by beekermememe}
   s.email = %q{support@onelogin.com}
   s.extra_rdoc_files = [
     "LICENSE",

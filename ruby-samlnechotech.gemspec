@@ -1,8 +1,8 @@
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
-require 'onelogin/ruby-saml/version'
+require 'onelogin/ruby-samlnechotech/version'
 
 Gem::Specification.new do |s|
-  s.name = 'ruby-saml-nechotech'
+  s.name = 'ruby-samlnechotech'
   s.version = Onelogin::Saml::VERSION
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   ]
   s.files = `git ls-files`.split("\n")
   s.homepage = %q{https://github.com/beekermememe/ruby-saml}
-  s.rubyforge_project = %q{http://www.rubygems.org/gems/ruby-saml-nechotech}
+  s.rubyforge_project = %q{http://www.rubygems.org/gems/ruby-samlnechotech}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}

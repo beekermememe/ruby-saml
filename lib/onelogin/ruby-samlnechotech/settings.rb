@@ -18,6 +18,7 @@ module Onelogin
       attr_accessor :compress_request
       attr_accessor :double_quote_xml_attribute_values
       attr_accessor :passive
+      attr_accessor :force_authn
 
       private
       

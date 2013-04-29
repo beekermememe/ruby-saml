@@ -45,6 +45,7 @@ module Onelogin
         root.attributes['Version'] = "2.0"
         root.attributes['Destination'] = settings.idp_sso_target_url unless settings.idp_sso_target_url.nil?
         root.attributes['IsPassive'] = settings.passive unless settings.passive.nil?
+        root.attributes['ForceAuthN'] = "#{settings.force_authn}" unless settings.force_authn.nil?
 
         # Conditionally defined elements based on settings
         if settings.assertion_consumer_service_url != nil

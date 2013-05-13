@@ -29,6 +29,23 @@ module Onelogin
         validate
       end
 
+      def xml_cert_validate(idp_cert_fingerprint, logger)
+
+        # get cert from response
+        base64_cert = self.elements["//ds:X509Certificate"].text
+        cert_text = Base64.decode64(base64_cert)
+        cert = OpenSSL::X509::Certificate.new(cert_text)
+
+        # check cert matches registered idp cert
+        fingerprint = Digest::SHA1.hexdigest(cert.to_der)
+        logger.info("fingerprint = " + fingerprint) if !logger.nil?
+        valid_flag = fingerprint == idp_cert_fingerprint.gsub(":", "").downcase
+
+        return valid_flag if !valid_flag
+
+        document.validate_doc(base64_cert, logger)
+      end
+
       def validate!
         validate(false)
       end
@@ -110,7 +127,7 @@ module Onelogin
         validate_structure(soft)      &&
         validate_response_state(soft) &&
         validate_conditions(soft)     &&
-        document.validate(get_fingerprint, soft) && 
+        xml_cert_validate(get_fingerprint, soft) &&
         success?
       end
 

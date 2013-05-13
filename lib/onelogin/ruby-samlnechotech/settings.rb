@@ -19,6 +19,7 @@ module Onelogin
       attr_accessor :double_quote_xml_attribute_values
       attr_accessor :passive
       attr_accessor :force_authn
+      attr_accessor :idp_isp_cert
 
       private
       

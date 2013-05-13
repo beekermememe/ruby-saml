@@ -35,15 +35,15 @@ module Onelogin
         base64_cert = document.elements["//ds:X509Certificate"].text
         cert_text = Base64.decode64(base64_cert)
         cert = OpenSSL::X509::Certificate.new(cert_text)
-
+        r_logger = Rails.logger rescue nil
         # check cert matches registered idp cert
         fingerprint = Digest::SHA1.hexdigest(cert.to_der)
-        logger.info("fingerprint = " + fingerprint) if !logger.nil?
+        r_logger.info("fingerprint = " + fingerprint) if !r_logger.nil?
         valid_flag = fingerprint == idp_cert_fingerprint.gsub(":", "").downcase
 
         return valid_flag if !valid_flag
 
-        document.validate_doc(base64_cert, logger)
+        document.validate_doc(base64_cert, r_logger)
       end
 
       def validate!

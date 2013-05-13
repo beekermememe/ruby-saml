@@ -32,7 +32,7 @@ module Onelogin
       def xml_cert_validate(idp_cert_fingerprint, logger)
 
         # get cert from response
-        base64_cert = self.elements["//ds:X509Certificate"].text
+        base64_cert = document.elements["//ds:X509Certificate"].text
         cert_text = Base64.decode64(base64_cert)
         cert = OpenSSL::X509::Certificate.new(cert_text)
 

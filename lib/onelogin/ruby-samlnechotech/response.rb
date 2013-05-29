@@ -95,12 +95,22 @@ module Onelogin
           parse_time(node, "SessionNotOnOrAfter")
         end
       end
-      
+
       # Checks the status of the response for a "Success" code
+      # (nechotech: ...or a "NoPassive" secondary status code)
       def success?
         @status_code ||= begin
           node = REXML::XPath.first(document, "/p:Response/p:Status/p:StatusCode", { "p" => PROTOCOL, "a" => ASSERTION })
-          node.attributes["Value"] == "urn:oasis:names:tc:SAML:2.0:status:Success"
+          primary_status = node.attributes["Value"]
+          case primary_status
+            when "urn:oasis:names:tc:SAML:2.0:status:Success"
+              true
+            when "urn:oasis:names:tc:SAML:2.0:status:Responder"
+              secondary_status = node.elements[1].attributes["Value"]
+              secondary_status == "urn:oasis:names:tc:SAML:2.0:status:NoPassive"
+            else
+              false
+          end
         end
       end
 

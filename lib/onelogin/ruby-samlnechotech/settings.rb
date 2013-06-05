@@ -22,7 +22,7 @@ module Onelogin
       attr_accessor :idp_isp_cert
 
       private
-      
+
       DEFAULTS = {:compress_request => true, :double_quote_xml_attribute_values => false}
     end
   end

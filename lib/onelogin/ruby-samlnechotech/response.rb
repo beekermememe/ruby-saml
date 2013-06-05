@@ -35,15 +35,14 @@ module Onelogin
         base64_cert = document.elements["//ds:X509Certificate"].text
         cert_text = Base64.decode64(base64_cert)
         cert = OpenSSL::X509::Certificate.new(cert_text)
-        r_logger = Rails.logger rescue nil
         # check cert matches registered idp cert
         fingerprint = Digest::SHA1.hexdigest(cert.to_der)
-        r_logger.info("fingerprint = " + fingerprint) if !r_logger.nil?
+        Logging.debug "Fingerprint:\n#{fingerprint}\n"
         valid_flag = fingerprint == idp_cert_fingerprint.gsub(":", "").downcase
 
         return valid_flag if !valid_flag
 
-        document.validate_doc(base64_cert, r_logger)
+        document.validate_doc(base64_cert, Logging)
       end
 
       def validate!
@@ -99,6 +98,7 @@ module Onelogin
       # Checks the status of the response for a "Success" code
       # (nechotech: ...or a "NoPassive" secondary status code)
       def success?
+        log()
         @status_code ||= begin
           node = REXML::XPath.first(document, "/p:Response/p:Status/p:StatusCode", { "p" => PROTOCOL, "a" => ASSERTION })
           primary_status = node.attributes["Value"]
@@ -125,6 +125,10 @@ module Onelogin
           node ||= xpath_first_from_signed_assertion('/a:Issuer')
           node.nil? ? nil : node.text
         end
+      end
+
+      def log
+        Logging.debug "SAML Response:\n#{document}\n"
       end
 
       private

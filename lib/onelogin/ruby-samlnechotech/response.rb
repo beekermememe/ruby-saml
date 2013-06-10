@@ -74,7 +74,7 @@ module Onelogin
 
           stmt_element.elements.each do |attr_element|
             name  = attr_element.attributes["Name"]
-            value = attr_element.elements.first.text
+            value = attr_element.elements.first.text rescue nil
 
             result[name] = value
           end

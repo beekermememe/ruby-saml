@@ -1,5 +1,5 @@
 module Onelogin
   module Saml
-    VERSION = '0.7.32'
+    VERSION = '0.7.33'
   end
 end

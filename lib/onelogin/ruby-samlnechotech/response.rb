@@ -37,7 +37,6 @@ module Onelogin
         cert = OpenSSL::X509::Certificate.new(cert_text)
         # check cert matches registered idp cert
         fingerprint = Digest::SHA1.hexdigest(cert.to_der)
-        Logging.debug "Fingerprint:\n#{fingerprint}\n"
         valid_flag = fingerprint == idp_cert_fingerprint.gsub(":", "").downcase
 
         return valid_flag if !valid_flag
@@ -98,7 +97,6 @@ module Onelogin
       # Checks the status of the response for a "Success" code
       # (nechotech: ...or a "NoPassive" secondary status code)
       def success?
-        log()
         @status_code ||= begin
           node = REXML::XPath.first(document, "/p:Response/p:Status/p:StatusCode", { "p" => PROTOCOL, "a" => ASSERTION })
           primary_status = node.attributes["Value"]
